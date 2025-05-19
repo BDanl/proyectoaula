@@ -17,6 +17,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 const screenWidth = Dimensions.get("window").width;
 
+
 const StatsScreen = ({ navigation }) => {
   // Configuración común mejorada
   const sharedChartConfig = {
