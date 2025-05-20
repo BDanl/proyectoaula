@@ -20,14 +20,14 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.daniq2.firetive"
+      "package": "com.mao2q.firetive"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "a2da4184-85c4-4d3a-894d-77f687f53a91"
+        "projectId": "0647dafd-20ce-468c-84b7-333a6876b2af"
       }
     }
   }
