@@ -10,6 +10,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   Keyboard,
+  FlatList,
+  TouchableOpacity,
 } from "react-native";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useUsersContext } from "../../context/UsersContext";
@@ -18,13 +20,18 @@ import AppLogoImage from "../../components/Logo/AppLogoImage";
 import AppLogoImage2 from "../../components/Logo/AppLogoImage2";
 import Brand from "../../components/Logo/Brand";
 import BrandText from "../../components/Logo/BrandText";
+import { useRoutinesContext } from "../../context/RoutinesContext";
+import { useNavigation } from "@react-navigation/native";
 
 const HomeScreen = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [inputText, setInputText] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const { CurrentUser, getUser } = useUsersContext();
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const { loadAllRoutines, routines } = useRoutinesContext();
+  const navigation = useNavigation();
   const auth = getAuth();
 
   useEffect(() => {
@@ -41,6 +48,13 @@ const HomeScreen = () => {
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
     };
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await loadAllRoutines();
+    };
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -62,6 +76,24 @@ const HomeScreen = () => {
     });
     return unsubscribe;
   }, []);
+
+  const handleSearch = (text) => {
+    setInputText(text);
+    if (text.length > 0) {
+      const filtered = routines.filter((routine) =>
+        routine.name.toLowerCase().includes(text.toLowerCase())
+      );
+      setSearchResults(filtered);
+    } else {
+      setSearchResults([]);
+    }
+  };
+
+  const navigateToRoutine = (routineName) => {
+    navigation.navigate(routineName);
+    setInputText("");
+    setSearchResults([]);
+  };
 
   if (loading) {
     return (
@@ -151,12 +183,26 @@ const HomeScreen = () => {
                 <View style={styles.inputContainer}>
                   <TextInput
                     style={styles.textInput}
-                    placeholder="Escribe algo aquí..."
+                    placeholder="Buscar rutinas..."
                     placeholderTextColor="#999"
                     value={inputText}
-                    onChangeText={setInputText}
+                    onChangeText={handleSearch}
                   />
                 </View>
+
+                {searchResults.length > 0 && (
+                  <View style={styles.searchResultsContainer}>
+                    {searchResults.map((item, index) => (
+                      <TouchableOpacity
+                        key={index} 
+                        style={styles.resultItem}
+                        onPress={() => navigateToRoutine(item.name)}
+                      >
+                        <Text style={styles.resultText}>{item.name}</Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                )}
               </View>
 
               {!isKeyboardVisible && (
@@ -286,6 +332,29 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginBottom: "10%",
   },
+  searchResultsContainer: {
+  width: "90%",
+  maxHeight: 200, 
+  backgroundColor: "#1a1a1a",
+  borderRadius: 10,
+  borderWidth: 1,
+  borderColor: "#3498db",
+  alignSelf: "center",
+  marginTop: -20,
+  overflow: 'hidden', 
+},
+searchResultsScroll: {
+  flexGrow: 1, 
+},
+resultItem: {
+  padding: 15,
+  borderBottomWidth: 1,
+  borderBottomColor: "#333",
+},
+resultText: {
+  color: "#fff",
+  fontSize: 16,
+},
 });
 
 export default HomeScreen;

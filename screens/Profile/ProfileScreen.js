@@ -254,7 +254,7 @@ const ProfileScreen = () => {
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
             style={[styles.actionButton, styles.exercisesButton]}
-            onPress={() => console.log("Ejercicios presionado")}
+            onPress={() => navigation.navigate("ExercisesList")}
           >
             <Text style={styles.buttonText}>Ejercicios</Text>
             <Ionicons
