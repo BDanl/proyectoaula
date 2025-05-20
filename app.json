@@ -13,7 +13,6 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "bundleIdentifier": "com.daniel.bovea.firetive",
       "supportsTablet": true
     },
     "android": {
@@ -21,14 +20,14 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.daniel.bovea.firetive"
+      "package": "com.raulq1.firetive"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "3db9fd64-a046-4308-a591-6be2168bf4d4"
+        "projectId": "73414e6c-e59f-401b-8471-c3426dd1b348"
       }
     }
   }
