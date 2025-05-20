@@ -1,14 +1,13 @@
 #!/bin/bash
 
-# Fix para expo-firebase-core
-if [ -f "node_modules/expo-firebase-core/android/build.gradle" ]; then
-  sed -i '/androidSourcesJar {/,/}/ {/classifier/d}' node_modules/expo-firebase-core/android/build.gradle
+# Corregir conflicto entre plugins de aplicación y biblioteca
+if [ -f "android/app/build.gradle" ]; then
+  sed -i '/apply plugin: "com.android.library"/d' android/app/build.gradle
+  sed -i '/apply plugin: "com.android.application"/d' android/app/build.gradle
+  echo 'apply plugin: "com.android.application"' >> android/app/build.gradle
 fi
 
-# Fix para expo-modules-core
-if [ -f "node_modules/expo-modules-core/android/ExpoModulesCorePlugin.gradle" ]; then
-  sed -i 's/components\.release/components\.default/' node_modules/expo-modules-core/android/ExpoModulesCorePlugin.gradle
-fi
-
-# Asegurar versión correcta de Kotlin
-echo "android.ext.kotlinVersion = \"1.7.0\"" > android/gradle.properties
+# Asegurar configuración correcta en gradle.properties
+echo "android.useAndroidX=true" > android/gradle.properties
+echo "android.enableJetifier=true" >> android/gradle.properties
+echo "org.gradle.jvmargs=-Xmx4608m" >> android/gradle.properties

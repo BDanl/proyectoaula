@@ -9,7 +9,7 @@
       "android": {
         "buildType": "apk",
         "gradleCommand": ":app:assembleDebug",
-        "image": "ubuntu-22.04-jdk-11-ndk-r23b"  
+        "image": "ubuntu-22.04-jdk-17-ndk-r25b"
       }
     },
     "preview": {
@@ -17,20 +17,14 @@
       "android": {
         "buildType": "apk",
         "gradleCommand": ":app:assembleRelease",
-        "image": "ubuntu-22.04-jdk-11-ndk-r23b",  
-        "env": {
-          "ORG_GRADLE_PROJECT_android_jdkHome": "/usr/lib/jvm/java-11-openjdk-amd64"
-        }
+        "image": "ubuntu-22.04-jdk-17-ndk-r25b"
       }
     },
     "production": {
       "android": {
         "buildType": "apk",
         "gradleCommand": ":app:assembleRelease",
-        "image": "ubuntu-22.04-jdk-17-ndk-r25b",  
-        "env": {
-          "ORG_GRADLE_PROJECT_android_jdkHome": "/usr/lib/jvm/java-11-openjdk-amd64"
-        }
+        "image": "ubuntu-22.04-jdk-17-ndk-r25b"
       }
     }
   },
