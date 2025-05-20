@@ -1,0 +1,38 @@
+{
+  "cli": {
+    "version": ">= 0.47.0"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "android": {
+        "gradleCommand": ":app:assembleDebug",
+        "buildType": "apk"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "gradleCommand": ":app:assembleRelease",
+        "buildType": "apk",
+        "env": {
+          "ORG_GRADLE_PROJECT_android_jdkHome": "/usr/lib/jvm/java-11-openjdk-amd64"
+        }
+      }
+    },
+    "production": {
+      "android": {
+        "gradleCommand": ":app:assembleRelease",
+        "buildType": "apk",
+        "env": {
+          "ORG_GRADLE_PROJECT_android_jdkHome": "/usr/lib/jvm/java-11-openjdk-amd64"
+        },
+        "image": "ubuntu-22.04-jdk-17-ndk-r23c"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
